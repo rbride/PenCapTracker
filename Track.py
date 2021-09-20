@@ -111,7 +111,9 @@ while(PenVideo.isOpened()):
         fig.canvas.draw()
         
         #convert matlab canvas to opencv image
-        plotimage = numpy.fromstring(fig.canvas.tostring_rgb(), dtype=numpy.uint8, sep='')
+        #Research Informed me the following fromstring was depreciated and to use frombuffer
+        #plotimage = numpy.fromstring(fig.canvas.tostring_rgb(), dtype=numpy.uint8, sep='')
+        plotimage = numpy.frombuffer(fig.canvas.tostring_rgb(), dtype=numpy.uint8)
         plotimage = plotimage.reshape(fig.canvas.get_width_height()[::-1] + (3,))
         plotimage = cv2.cvtColor(plotimage, cv2.COLOR_RGB2BGR)
         #Draw Plot in its own window
